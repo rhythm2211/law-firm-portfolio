@@ -46,16 +46,19 @@ docker compose up --build
 App: http://localhost:3001  
 SQLite data: Docker volume `meridian-data` at `/data`
 
+## GitHub
+
+**https://github.com/rhythm2211/law-firm-portfolio**
+
 ## Deploy to Railway
 
-1. Push this repo to GitHub.
-2. In [Railway](https://railway.app), **New Project → Deploy from GitHub repo**.
-3. Railway detects `Dockerfile` / `railway.toml` and builds the image.
-4. Add a **volume** mounted at `/data` (for SQLite persistence).
-5. Set **PORT** (Railway injects this automatically).
-6. Optional env:
-   - `DATA_DIR=/data`
-   - `STATIC_DIR=/app/frontend/dist` (default in image)
+Step-by-step: **[RAILWAY_SETUP.md](./RAILWAY_SETUP.md)**
+
+Summary:
+
+1. Railway → **New Project** → deploy **`rhythm2211/law-firm-portfolio`** from GitHub.
+2. Add a **volume** at mount path **`/data`** (SQLite).
+3. **Generate domain** under Networking.
 
 Health check: `GET /api/health`
 

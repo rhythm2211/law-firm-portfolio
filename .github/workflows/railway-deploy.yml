@@ -1,0 +1,29 @@
+# Optional: auto-deploy on push when Railway secrets are configured.
+# See RAILWAY_SETUP.md for one-time dashboard setup, then add these GitHub secrets:
+#   RAILWAY_TOKEN, RAILWAY_PROJECT_ID, RAILWAY_SERVICE_ID
+
+name: Deploy to Railway
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    if: ${{ secrets.RAILWAY_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway up --ci --detach \
+            --project "${{ secrets.RAILWAY_PROJECT_ID }}" \
+            --service "${{ secrets.RAILWAY_SERVICE_ID }}" \
+            --environment production
