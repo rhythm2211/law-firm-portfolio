@@ -7,5 +7,5 @@ healthcheckPath = "/api/health"
 healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
 
-# Requires a Railway volume at /data for SQLite (add in dashboard → service → Volumes)
-requiredMountPath = "/data"
+# Recommended: create a Railway volume with mount path /data (Ctrl+K → "Add Volume")
+# requiredMountPath = "/data"

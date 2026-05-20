@@ -4,7 +4,10 @@ import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const dataDir = process.env.DATA_DIR || path.join(__dirname, '..', 'data')
+const dataDir =
+  process.env.DATA_DIR ||
+  process.env.RAILWAY_VOLUME_MOUNT_PATH ||
+  path.join(__dirname, '..', 'data')
 fs.mkdirSync(dataDir, { recursive: true })
 const dbPath = path.join(dataDir, 'meridian.db')
 

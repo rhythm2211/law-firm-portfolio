@@ -2,75 +2,100 @@
 
 GitHub repo: **https://github.com/rhythm2211/law-firm-portfolio**
 
-## 1. Create the Railway project (dashboard — ~5 minutes)
+## 1. Create the Railway project
 
 1. Open [railway.app](https://railway.app) and sign in.
 2. **New Project** → **Deploy from GitHub repo**.
-3. Choose **`rhythm2211/law-firm-portfolio`** (authorize GitHub if prompted).
-4. Railway detects the root **`Dockerfile`** and `railway.toml` automatically.
-5. Wait for the first build to finish.
+3. Choose **`rhythm2211/law-firm-portfolio`**.
+4. Wait for the Docker build to finish.
 
-## 2. Add persistent storage (required for bookings + chat history)
+---
 
-SQLite lives at `/data` inside the container.
+## 2. Add a volume (mount path `/data`)
 
-1. Open your service in Railway.
-2. **Settings** → **Volumes** → **Add volume**.
-3. Mount path: **`/data`**
-4. Redeploy if prompted.
+Railway **does not** use a “Settings → Volumes” menu anymore. Volumes are created from the **project canvas** or the **CLI**.
 
-`railway.toml` sets `requiredMountPath = "/data"` so Railway will not run without this volume.
+### Option A — Command palette (easiest in the dashboard)
 
-## 3. Environment variables (usually automatic)
+1. Open your **project** (you should see your service as a box on the canvas).
+2. Press **`Ctrl+K`** (Windows) or **`⌘K`** (Mac).
+3. Type **`volume`** and choose **Add Volume** / **Create Volume**.
+4. Select your **law-firm-portfolio** service when asked.
+5. When prompted for **mount path**, enter exactly:
 
-These are set in the **Dockerfile**; override only if needed:
+   ```
+   /data
+   ```
 
-| Variable | Value |
-|----------|--------|
-| `PORT` | Set by Railway (do not hardcode) |
-| `DATA_DIR` | `/data` |
-| `STATIC_DIR` | `/app/frontend/dist` |
-| `NODE_ENV` | `production` |
+6. Confirm. Railway may redeploy the service automatically.
 
-## 4. Public URL
+### Option B — Right‑click the canvas
 
-1. Service → **Settings** → **Networking** → **Generate domain**.
-2. Open the URL — you should see the Meridian site.
-3. Test API: `https://YOUR-DOMAIN.up.railway.app/api/health`
+1. On the project page, **right‑click** empty space on the canvas (or on your service card).
+2. Look for **Add Volume** / **Create Volume**.
+3. Attach it to your app service.
+4. Set mount path to **`/data`**.
 
-## 5. Optional: CLI deploy from your machine
+### Option C — Railway CLI (if the UI is hard to find)
 
 ```bash
 npm install -g @railway/cli
 railway login
-cd law-firm-portfolio
-railway link    # pick the project + service
-railway up
+cd path\to\law-firm-portfolio
+railway link          # pick your project + service
+railway volume add --mount-path /data
 ```
 
-Create an API token at [railway.com/account/tokens](https://railway.com/account/tokens) for non-interactive use:
+List volumes to confirm:
 
 ```bash
-set RAILWAY_TOKEN=your_token
-railway up --project YOUR_PROJECT_ID --service YOUR_SERVICE_ID
+railway volume list
 ```
 
-## 6. Optional: GitHub Actions auto-deploy
+---
 
-After the dashboard project exists:
+### What the mount path means
 
-1. Railway → **Account** → **Tokens** → create token.
-2. GitHub repo → **Settings** → **Secrets and variables** → **Actions**:
-   - `RAILWAY_TOKEN` — your token
-   - `RAILWAY_PROJECT_ID` — Project → Settings → General
-   - `RAILWAY_SERVICE_ID` — Service → Settings → General
-3. Push to `main` or run **Actions → Deploy to Railway → Run workflow**.
+| Field | Value for this app |
+|--------|---------------------|
+| **Mount path** | `/data` |
+| **Why** | SQLite database file is stored at `/data/meridian.db` (`DATA_DIR=/data` in the Dockerfile) |
+
+Do **not** use `/app/data` unless you change `DATA_DIR` — this app uses an absolute path **`/data`**.
+
+After the volume is attached, Railway sets `RAILWAY_VOLUME_MOUNT_PATH=/data` at runtime (you do not need to add that variable manually).
+
+---
+
+## 3. Public URL
+
+1. Click your **service** on the canvas.
+2. **Settings** tab → **Networking** → **Generate Domain**.
+3. Test: `https://YOUR-DOMAIN.up.railway.app/api/health`
+
+---
+
+## 4. Environment variables (defaults in Dockerfile)
+
+| Variable | Value |
+|----------|--------|
+| `PORT` | Set by Railway automatically |
+| `DATA_DIR` | `/data` |
+| `STATIC_DIR` | `/app/frontend/dist` |
+
+---
+
+## 5. Optional: GitHub Actions deploy
+
+Add secrets: `RAILWAY_TOKEN`, `RAILWAY_PROJECT_ID`, `RAILWAY_SERVICE_ID` — see README.
+
+---
 
 ## Troubleshooting
 
-| Issue | Fix |
-|-------|-----|
-| Build fails on `better-sqlite3` | Dockerfile includes build tools; redeploy from latest `main`. |
-| Health check fails | Ensure `/api/health` responds; check deploy logs. |
-| Bookings reset after redeploy | Attach volume at `/data`. |
-| 404 on page refresh | Static + SPA fallback is in `backend/src/index.ts`; use latest image. |
+| Problem | What to do |
+|---------|------------|
+| Can’t find “Volumes” in Settings | Use **Ctrl+K** → “volume”, or **right‑click canvas**, or CLI `railway volume add`. |
+| Deploy fails: volume required | Add volume at `/data`, or redeploy after `railway volume add`. |
+| Bookings reset after redeploy | Volume not mounted — confirm mount path is `/data`. |
+| `docker VOLUME not supported` | Fixed in repo — pull latest `main`, no `VOLUME` in Dockerfile. |
