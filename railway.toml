@@ -6,3 +6,7 @@ dockerfilePath = "Dockerfile"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
+
+# Persist SQLite database (attach volume named meridian-data in Railway dashboard)
+[[deploy.volumes]]
+mountPath = "/data"
