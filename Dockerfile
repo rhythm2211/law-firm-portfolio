@@ -33,6 +33,6 @@ ENV DATA_DIR=/data
 ENV STATIC_DIR=/app/frontend/dist
 
 EXPOSE 3001
-VOLUME ["/data"]
 
+# Persistent data: attach a Railway volume at /data (see railway.toml requiredMountPath)
 CMD ["node", "backend/dist/index.js"]
