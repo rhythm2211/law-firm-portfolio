@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meridian Law Partners — Strategic counsel for matters that matter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              paper: "#F5F2EC",
+              ink: "#11151C",
+              ink2: "#1B2230",
+              ash: "#5E636E",
+              border: "#E4DFD3",
+              brand: "#C8531D",
+              brandSoft: "#E8551F",
+              brandLight: "#F0A36C",
+              gold: "#B58A4C",
+              cream: "#FBF9F4",
+            },
+            fontFamily: {
+              serif: ['"Instrument Serif"', "serif"],
+              sans: ['"Geist"', "ui-sans-serif", "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  </head>
+  <body class="bg-paper text-ink font-sans antialiased">
+    <div id="root"></div>
+    <script src="data.js"></script>
+    <script type="text/babel" data-presets="react" src="parts-hero.jsx"></script>
+    <script type="text/babel" data-presets="react" src="parts-mid.jsx"></script>
+    <script type="text/babel" data-presets="react" src="parts-cases.jsx"></script>
+    <script type="text/babel" data-presets="react" src="parts-team.jsx"></script>
+    <script type="text/babel" data-presets="react" src="parts-chat-booking.jsx"></script>
+    <script type="text/babel" data-presets="react" src="app.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+name: Docker build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t meridian-law .
+
+      - name: Smoke test container
+        run: |
+          docker run -d --name meridian-test -p 3001:3001 -e PORT=3001 meridian-law
+          sleep 5
+          curl -fsS http://localhost:3001/api/health
+          curl -fsS -X POST http://localhost:3001/api/chat \
+            -H "Content-Type: application/json" \
+            -d '{"messages":[{"role":"user","content":"hello"}]}'
+          docker stop meridian-test

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.db
+backend/data/
+.DS_Store
+.cursor/
+ml-firm-handoff.zip
+
+# Unused local reference images at repo root
+/*.jpg
+/*.jpeg
+/*.avif

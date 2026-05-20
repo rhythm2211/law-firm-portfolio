@@ -1,0 +1,14 @@
+node_modules
+frontend/node_modules
+backend/node_modules
+frontend/dist
+backend/dist
+backend/data
+.git
+.env
+.env.*
+*.db
+ml-firm
+.cursor
+agent-transcripts
+README.md

@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      DATA_DIR: /data
+      STATIC_DIR: /app/frontend/dist
+    volumes:
+      - meridian-data:/data
+
+volumes:
+  meridian-data:

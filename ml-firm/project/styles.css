@@ -1,0 +1,354 @@
+/* === Meridian Law Partners — global styles === */
+
+:root {
+  --paper: #f5f2ec;
+  --ink: #11151c;
+  --ink2: #1b2230;
+  --ash: #5e636e;
+  --border: #e4dfd3;
+  --brand: #c8531d;
+  --gold: #b58a4c;
+  --cream: #fbf9f4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-wrap: pretty;
+}
+
+/* Display serif tweak — Instrument Serif looks great larger and tighter */
+.font-serif {
+  letter-spacing: -0.018em;
+}
+
+.font-serif em,
+.font-serif i {
+  font-style: italic;
+  font-feature-settings: "ss01";
+}
+
+/* Paper grain noise — extremely subtle */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='6'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+  mix-blend-mode: multiply;
+}
+
+/* Dotted divider */
+.divider {
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    var(--border) 0,
+    var(--border) 50%,
+    transparent 50%
+  );
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+}
+
+/* Glow underline used on nav */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Hero animated wash */
+.hero-wash {
+  background:
+    radial-gradient(40% 60% at 18% 22%, rgba(200, 83, 29, 0.28), transparent 60%),
+    radial-gradient(50% 50% at 82% 12%, rgba(181, 138, 76, 0.22), transparent 65%),
+    radial-gradient(60% 60% at 50% 100%, rgba(27, 34, 48, 0.55), transparent 70%),
+    linear-gradient(180deg, #0c0f15 0%, #11151c 50%, #14181f 100%);
+}
+
+.hero-glow-a,
+.hero-glow-b {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.hero-glow-a {
+  width: 600px;
+  height: 600px;
+  left: -120px;
+  top: -160px;
+  background: radial-gradient(circle, #d96a35 0%, transparent 60%);
+  animation: drift 22s ease-in-out infinite alternate;
+}
+.hero-glow-b {
+  width: 520px;
+  height: 520px;
+  right: -100px;
+  bottom: -160px;
+  background: radial-gradient(circle, #b58a4c 0%, transparent 65%);
+  animation: drift2 26s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(120px, 60px) scale(1.08);
+  }
+}
+@keyframes drift2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-100px, -40px) scale(1.1);
+  }
+}
+
+/* Subtle scrolling marquee */
+.marquee {
+  display: flex;
+  gap: 4rem;
+  animation: marquee 38s linear infinite;
+  width: max-content;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Text-roll button */
+.tr-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tr-btn .tr-stack {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+  line-height: 1;
+  position: relative;
+}
+.tr-btn .tr-stack > span {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.tr-btn:hover .tr-stack > span {
+  transform: translateY(-1em);
+}
+
+/* Case card hover */
+.case-card {
+  transition: transform 0.5s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.case-card:hover {
+  transform: translateY(-4px);
+}
+.case-card video {
+  transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.case-card:hover video {
+  transform: scale(1.05);
+}
+
+/* Tilted spotlight on dark sections */
+.spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    60% 50% at 50% 0%,
+    rgba(200, 83, 29, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Stat tick */
+.stat-tick {
+  width: 2px;
+  height: 18px;
+  background: var(--brand);
+}
+
+/* Chat scrollbar */
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+}
+
+/* Typed cursor */
+.cursor-blink::after {
+  content: "▍";
+  margin-left: 2px;
+  color: var(--brand);
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Practice tile */
+.practice-tile {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
+}
+.practice-tile .pt-arrow {
+  transition: transform 0.5s cubic-bezier(0.6, 0, 0.2, 1);
+}
+.practice-tile:hover .pt-arrow {
+  transform: rotate(-45deg) translate(2px, -2px);
+}
+
+/* Frame mosaic */
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  transition: flex-grow 0.7s cubic-bezier(0.6, 0, 0.2, 1);
+  flex-grow: 1;
+  min-width: 0;
+}
+.frame:hover {
+  flex-grow: 2.4;
+}
+.frame video,
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 10, 14, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+  padding: 1rem;
+  animation: fade 0.25s ease-out;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+.modal-card {
+  animation: rise 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Insights card hover */
+.insight {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.insight:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 40px -20px rgba(20, 23, 31, 0.25),
+    0 2px 6px -2px rgba(20, 23, 31, 0.08);
+}
+
+/* Pill button */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Vertical rule */
+.vrule {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth section fade */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Custom selection */
+::selection {
+  background: var(--brand);
+  color: white;
+}
+
+/* Ken Burns slow pan */
+.kb-pan {
+  animation: kb 22s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+@keyframes kb {
+  0% {
+    transform: scale(1.05) translate(-1%, 1%);
+  }
+  100% {
+    transform: scale(1.18) translate(2%, -2%);
+  }
+}

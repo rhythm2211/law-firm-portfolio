@@ -1,0 +1,29 @@
+@import './ml-firm.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f5f2ec;
+  color: #11151c;
+  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.input {
+  width: 100%;
+  background: #fbf9f4;
+  border: 1px solid #e4dfd3;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: #11151c;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #c8531d;
+}
